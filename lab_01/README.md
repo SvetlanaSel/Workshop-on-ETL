@@ -63,3 +63,26 @@
 <img width="1423" height="711" alt="image" src="https://github.com/user-attachments/assets/234c28dd-046c-4717-9586-20541b65de93" />
 
 Да, данные появились в СУБД.
+
+### 8. Проверка с помощью sql - запроса.
+
+Выведу рейтинг каждой платформы:
+```
+SELECT platform, COUNT(*) as total_posts, 
+ROUND(AVG(likes), 2) as avg_likes, 
+ROUND(AVG(comments), 2) as avg_comments, 
+ROUND(AVG(shares), 2) as avg_shares, 
+ROUND(AVG(engagement_rate), 2) as avg_engagement, 
+SUM(sentiment) as positive_posts, 
+ROUND(SUM(sentiment) * 100.0 / COUNT(*), 2) as positive_percentage 
+FROM sm_sentiment 
+GROUP BY platform ORDER BY avg_engagement DESC;
+```
+Результат:
+
+<img width="1397" height="356" alt="image" src="https://github.com/user-attachments/assets/1eede345-ab8d-4b54-bb0a-30df90b105bf" />
+
+Можно увидеть, что Instagram лидирует по количеству постов и по среднему количеству лайков на пост, пользователи Facebook активнее обсуждают контент и чаще делятся им, на LinkedIn контент получает лучший отклик в расчете на охват, а пользователи Twitter чаще публикуют лояльный для аудитории контент (наибольшее количество позитивных откликов).
+
+## Вывод
+В ходе выполнения лабораторной работы был реализован полный цикл ETL-процесса для загрузки, обработки и анализа данных из CSV-файла в базу данных MySQL с использованием инструмента Pentaho. Все этапы обработки выполнены корректно, ошибки при экспорте данных были выявлены и устранены. Получилась готовая к анализу база данных.

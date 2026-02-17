@@ -3,7 +3,7 @@
 **Цель работы.** Изучение основных принципов работы с ETL-инструментами на примере Pentaho Data Integration (PDI), настройка среды, создание конвейера обработки данных (фильтрация, очистка, замена значений) и выгрузка результатов в базу данных MySQL.
 
 Файлы для лабораторной:
-- [Исходный файл с данными]()
+- [Исходный файл с данными](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_01/data_new1.csv)
 - [Файл схемы etl](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_01/lab_02_1_csv_social_media.ktr)
 ---
 ## Шаг 1. Запуск Pentaho Spoon

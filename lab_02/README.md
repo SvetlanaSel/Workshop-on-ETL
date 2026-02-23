@@ -36,7 +36,7 @@ CREATE TABLE orders (
     INDEX idx_product_id (product_id)
 );
 
--- 2. Таблица клиентов (измерение) - уже есть city и state, добавлен product_id
+-- 2. Таблица клиентов (измерение) - добавлен product_id
 DROP TABLE IF EXISTS customers;
 CREATE TABLE customers (
     id INT AUTO_INCREMENT PRIMARY KEY,

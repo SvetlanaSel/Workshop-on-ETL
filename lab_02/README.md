@@ -166,9 +166,15 @@ SELECT COUNT(*) as products_count FROM products;
 ```
 Результаты:
 
+orders:
+
 <img width="392" height="177" alt="image" src="https://github.com/user-attachments/assets/05a39f99-3a05-49f8-9268-877a435f92d1" />
 
+customers:
+
 <img width="407" height="178" alt="image" src="https://github.com/user-attachments/assets/5e5eabdd-6a53-48b1-bbce-3383c7fdf950" />
+
+products:
 
 <img width="393" height="168" alt="image" src="https://github.com/user-attachments/assets/1be30b05-8f56-4c90-81e1-456d948cedc3" />
 

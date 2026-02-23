@@ -73,8 +73,7 @@ CREATE TABLE products (
 );
 
 -- 4. Настройка кодировки
--- ЗАМЕНИТЕ mgpu_ico_etl_XX на имя вашей базы данных!
-ALTER DATABASE mgpu_ico_etl_XX CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+ALTER DATABASE mgpu_ico_etl_13 CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE orders CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE customers CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 ALTER TABLE products CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;

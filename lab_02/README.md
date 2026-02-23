@@ -100,10 +100,19 @@ ALTER TABLE products CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
     *   **Target file:** `${CSV_FILE_PATH}`
 4.  **Transformation.** Последовательный вызов трех трансформаций для загрузки данных.
 
+HTTP:
+
+<img width="1213" height="674" alt="image" src="https://github.com/user-attachments/assets/51a43f24-289c-4ce0-aec5-867e5d323ecf" />
+
+Check File Exists:
+
+<img width="446" height="178" alt="image" src="https://github.com/user-attachments/assets/fb2c94cb-c447-46b0-a32f-862663e3adeb" />
+
 Готовая схема:
 
 <img width="1021" height="471" alt="image" src="https://github.com/user-attachments/assets/6d00afdb-efbd-4d81-98c7-a9b69c6d8356" />
 
+Можно увидеть, что Job успешно запустился.
 ### Шаг 2. Реализация Трансформаций (Transformations)
 
 #### Трансформация 1. Load Orders
@@ -116,6 +125,7 @@ ALTER TABLE products CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
 4.  **Value Mapper.** Преобразование поля `Returned`: `Yes` -> `1`, `No` -> `0`, `Empty` -> `0`.
 
 <img width="388" height="186" alt="image" src="https://github.com/user-attachments/assets/b2ea387d-020b-4435-b02f-0426861079ec" />
+
 
 #### Трансформация 2. Load Customers
 1.  **Select Values.** Оставьте только поля, относящиеся к клиенту (`customer_id`, `name`, `city` и т.д.).

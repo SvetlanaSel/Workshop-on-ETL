@@ -89,7 +89,20 @@ ALTER TABLE products CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
 
 ### Шаг 1. Настройка Job (Главного задания)
 
-Шаг был выполнен заранее
+Создаю Job, который управляет всем процессом.
+
+1.  **Set Variables:** Создаю переменную пути к файлу.
+    *   Variable: `CSV_FILE_PATH`
+    *   Value: `/home/dba/Downloads/datain/samplestore-general.csv`.
+2.  **Check File Exists:** Проверка наличия файла `${CSV_FILE_PATH}`.
+3.  **HTTP (Download):** Загрузка файла, если его нет.
+    *   **URL:** `https://raw.githubusercontent.com/BosenkoTM/workshop-on-ETL/main/data_for_lessons/samplestore-general.csv`
+    *   **Target file:** `${CSV_FILE_PATH}`
+4.  **Transformation.** Последовательный вызов трех трансформаций для загрузки данных.
+
+Готовая схема:
+
+<img width="1021" height="471" alt="image" src="https://github.com/user-attachments/assets/6d00afdb-efbd-4d81-98c7-a9b69c6d8356" />
 
 ### Шаг 2. Реализация Трансформаций (Transformations)
 

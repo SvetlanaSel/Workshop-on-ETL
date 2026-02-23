@@ -126,7 +126,21 @@ ALTER TABLE products CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
 
 <img width="726" height="289" alt="image" src="https://github.com/user-attachments/assets/0d5b707b-c3b4-468e-a459-325a13f6c3a4" />
 
+Результаты успешного выполнения трансформаций:
+
+<img width="916" height="311" alt="image" src="https://github.com/user-attachments/assets/161398d0-75e3-4567-a8f4-230cc1ba1ae8" />
+
+<img width="789" height="310" alt="image" src="https://github.com/user-attachments/assets/618b82d6-7feb-4405-961a-5e2c71c1815e" />
+
+<img width="852" height="326" alt="image" src="https://github.com/user-attachments/assets/e4f703f7-800b-467d-9505-d3004553921d" />
+
 
 ---
 
-## 4. Варианты индивидуальных заданий
+## 4. Варианты индивидуальных заданий. Вариант 13
+
+| № | Основной фильтр для загрузки в БД | Доп. задание 1 (Аналитика) | Доп. задание 2 (Аналитика) |
+|---|---|---|---|
+| 13 | Штат: только Texas | Анализ возвратов | Отчет по доставке |
+
+Выбор по штату уже был выполнен. Теперь необходимо провести аналитику

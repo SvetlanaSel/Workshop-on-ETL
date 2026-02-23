@@ -102,15 +102,30 @@ ALTER TABLE products CONVERT TO CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci
     *   FALSE -> **Write to Log** (логирование ошибок).
 4.  **Value Mapper.** Преобразование поля `Returned`: `Yes` -> `1`, `No` -> `0`, `Empty` -> `0`.
 
+<img width="388" height="186" alt="image" src="https://github.com/user-attachments/assets/b2ea387d-020b-4435-b02f-0426861079ec" />
+
 #### Трансформация 2. Load Customers
 1.  **Select Values.** Оставьте только поля, относящиеся к клиенту (`customer_id`, `name`, `city` и т.д.).
 2.  **Memory Group By.** Группировка по `customer_id` (устранение дублей клиентов).
-3.  **Table Output.** Загрузка в таблицу `customers`.
+3.   **Filter Rows (Валидация):**
+    *   Условие:`state = 'Texas'`.
+    *   TRUE -> **Table Output** (в таблицу `customers`).
+    *   FALSE -> **Write to Log** (логирование ошибок).
+4.  **Table Output.** Загрузка в таблицу `customers`.
+
+<img width="726" height="289" alt="image" src="https://github.com/user-attachments/assets/67284b5d-a46d-486d-8190-bfcbd2c3641e" />
 
 #### Трансформация 3. Load Products
 1.  **Select Values.** Оставьте поля продукта (`product_id`, `category`, `name` и т.д.).
 2.  **Memory Group By.** Группировка по `product_id`.
-3.  **Table Output.** Загрузка в таблицу `products`.
+3.  **Filter Rows (Валидация):**
+    *   Условие:`state = 'Texas'`.
+    *   TRUE -> **Table Output** (в таблицу `products`).
+    *   FALSE -> **Write to Log** (логирование ошибок).
+4.  **Table Output.** Загрузка в таблицу `products`.
+
+<img width="726" height="289" alt="image" src="https://github.com/user-attachments/assets/0d5b707b-c3b4-468e-a459-325a13f6c3a4" />
+
 
 ---
 

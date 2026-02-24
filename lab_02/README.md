@@ -7,9 +7,11 @@
 
 Шаг был выполнен заранее
 Используемые файлы:
-- []()
-- []()
-- []()
+- [job file](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_02/Job_CSV_to_MYsql_lab2.kjb)
+- [Трансформация orders](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_02/lab_02_1_csv_orders.ktr)
+- [Трансформация customers](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_02/lab_02_2_csv_to_Customers.ktr)
+- [Трансформация products](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_02/lab_02_3_csv_to_products.ktr)
+- [Исходные данные](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_02/samplestore-general.csv)
 ---
 
 ## 2. Подготовка базы данных

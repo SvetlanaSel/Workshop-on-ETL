@@ -6,6 +6,7 @@
 ## 1. Техническое обеспечение и окружение
 
 Шаг был выполнен заранее
+
 Используемые файлы:
 - [job file](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_02/Job_CSV_to_MYsql_lab2.kjb)
 - [Трансформация orders](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_02/lab_02_1_csv_orders.ktr)

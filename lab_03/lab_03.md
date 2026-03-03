@@ -11,7 +11,7 @@
 
 Перед реализацией в Pentaho спроектирую схему потоков данных.
 
-<img width="1091" height="441" alt="лаб3 drawio" src="https://github.com/user-attachments/assets/3881b0c3-0b9e-4307-ad18-affe6c84b530" />
+<img width="1092" height="442" alt="лаб3 drawio (1)" src="https://github.com/user-attachments/assets/4ac655e7-f673-4d13-9cda-eb83a126e199" />
 
 ---
 

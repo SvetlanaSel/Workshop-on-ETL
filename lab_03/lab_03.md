@@ -9,9 +9,10 @@
 ---
 
 Созданные файлы:
--[JOB](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_03/Job_CSV_to_MYsql_lab3.kjb)
--[csv transformation](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_03/lab_03_csv_to_purchase.ktr)
--[excel+pg transformation](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_03/lab_03_excel_pg.ktr)
+
+- [JOB](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_03/Job_CSV_to_MYsql_lab3.kjb)
+- [csv transformation](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_03/lab_03_csv_to_purchase.ktr)
+- [excel+pg transformation](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_03/lab_03_excel_pg.ktr)
 
 ---
 

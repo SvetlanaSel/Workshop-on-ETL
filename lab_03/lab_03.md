@@ -6,12 +6,15 @@
 | № | Тема и источники | Задача (ETL + Аналитика) |
 |---|---|---|
 | 13 | **Лояльность.** <br>PostgreSQL: Бонусная программа (счета).<br>CSV: История покупок.<br>Excel: Акции и спецпредложения. | Проанализировать эффективность программы лояльности. Сколько бонусов начислено/списано по акционным товарам. |
+---
 
-Созданные файлы:
+## Созданные файлы:
 -[JOB](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_03/Job_CSV_to_MYsql_lab3.kjb)
 -[csv transformation](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_03/lab_03_csv_to_purchase.ktr)
 -[excel+pg transformation](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_03/lab_03_excel_pg.ktr)
+
 ---
+
 ## 1. Архитектура решения
 
 Перед реализацией в Pentaho спроектирую схему потоков данных.

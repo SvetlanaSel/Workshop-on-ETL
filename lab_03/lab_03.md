@@ -116,4 +116,39 @@
 
 <img width="1245" height="344" alt="image" src="https://github.com/user-attachments/assets/280e3c14-1b0c-4df4-b99c-4e2f0ec9baab" />
 
+
+#### 3. JOB
+
+<img width="910" height="582" alt="image" src="https://github.com/user-attachments/assets/7854bd16-7418-40b0-b99b-69ea897cc86c" />
+
+
 ---
+
+### Шаг 4. Создание таблицы и запуск JOB
+
+Создаю таблицу для pg+excel:
+
+<img width="464" height="549" alt="image" src="https://github.com/user-attachments/assets/231a57fa-2837-4cf2-845c-06c931a7ff6a" />
+
+Проверяю после запуска JOB:
+
+<img width="1429" height="514" alt="image" src="https://github.com/user-attachments/assets/47d26a96-3b97-4d8f-8be0-1c7fe89d75de" />
+
+Данные успешно перенеслись
+
+Аналогично с таблицей purchase_history
+
+<img width="1355" height="353" alt="image" src="https://github.com/user-attachments/assets/95bf0435-7ff7-45ee-875c-b3949b5bdf07" />
+
+---
+
+## 5. Создание представлений
+
+---
+
+## 6. Вывод
+
+В ходе выполнения лабораторной работы была спроектирована архитектура решения, было разработано комплексное ETL-решение для импорта данных из СУБД PostgreSQL и файловых источников CSV и Excel в хранилище MySQL.
+
+Индивидуальное задание было выполнено в полном объеме.
+

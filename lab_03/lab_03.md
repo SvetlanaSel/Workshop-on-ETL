@@ -118,6 +118,8 @@
 
 - Расчет нового показателя:
 
+bonus_usage_rate = (promo_written_off / promo_accrued) * 100 - насколько эффективно клиенты тратят бонусы, полученные по акциям
+
 <img width="1245" height="344" alt="image" src="https://github.com/user-attachments/assets/280e3c14-1b0c-4df4-b99c-4e2f0ec9baab" />
 
 

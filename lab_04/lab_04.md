@@ -7,8 +7,9 @@
 *   Среда выполнения: Google Colab или Jupyter Notebook (локально).
 *   Библиотеки: `dask`, `pandas`, `graphviz`.
 
-**[Файл lab_04_variant_13.ipynb]()**
+[Файл lab_04_variant_13.ipynb]()
 
+---
 
 ### Шаг 1. Extract (Извлечение данных)
 

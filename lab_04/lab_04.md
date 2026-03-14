@@ -13,7 +13,7 @@
 
 ### Шаг 1. Extract (Извлечение данных)
 
-
+Код:
 ```python
 # Установка Dask с полным набором зависимостей и графов
 !pip install "dask[complete]" graphviz
@@ -50,7 +50,9 @@ df = dd.read_csv('Parking_Violations_Issued_-_Fiscal_Year_2014__August_2013___Ju
 # Просмотр структуры (метаданных) датасета
 df
 ```
-
+Результат:
+https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/1.jpg
+![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/1.jpg)
 
 ### Шаг 2. Transform (Трансформация и очистка данных)
 Проводится профилирование качества данных: вычисление процента пропущенных значений, метод `.compute()` * Затем удаляю разреженные столбцы, не прибегая к вычислениям в памяти.

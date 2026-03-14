@@ -120,4 +120,86 @@ print("Датасет успешно сохранен!")
 
 ## Шаг 4. Визуализация направленных ациклических графов (DAG)
 
+## Простой граф
+Сначала создаю простой граф, визуализирующий процесс подсчета общего количества нарушений, уникальных марок автомобилей и среднего количества нарушений на марку в датасете. Задаю 3 простых python-функции, отложенные объекты, и запускаю вычисления и получаю граф
+
+```python
+from dask import delayed
+from IPython.display import Image
+
+def get_total_violations():
+    return len(df_dropped)
+
+def get_unique_makes():
+    return df_dropped['Vehicle Make'].nunique().compute()
+
+def avg_violations_per_make(total, unique):
+    return round(total / unique, 2)
+
+x = delayed(get_total_violations)()
+y = delayed(get_unique_makes)()
+z = delayed(avg_violations_per_make)(x, y)
+
+z.visualize(filename='simple_violation_analysis.png')
+display(Image('simple_violation_analysis.png'))
+```
+
+Итоговый граф:
+
+![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/1%D0%BF%D1%80%D0%BE%D1%81%D1%82%D0%BE%D0%B9.png)
+
+## Сложный граф
+
+Теперь создаю сложный граф, который отражает процесс проведения расчетов по районам Нью-Йорка. Считаю данные отдельно для каждого района, вычисляю общее количество нарушений и процент нарушений, совершенных в час-пик (8-10 утра) для каждого района.
+
+```python
+from dask import delayed
+from IPython.display import Image
+import pandas as pd
+
+# список районов для анализа
+districts = ['NY', 'K', 'Q', 'BX', 'R']  # Манхэттен, Бруклин, Квинс, Бронкс, Статен-Айленд
+
+# данные по каждому району
+def load_district_data(district):
+    return df_dropped[df_dropped['Violation County'] == district]
+
+layer1 = [delayed(load_district_data)(d) for d in districts]
+
+# количество нарушений в районе
+def count_violations(district_data):
+    if district_data is None or len(district_data) == 0:
+        return 0
+    return len(district_data)
+
+layer2 = [delayed(count_violations)(d) for d in layer1]
+
+# нарушения в час-пик 
+def count_peak_hours(district_data):
+    if district_data is None or len(district_data) == 0:
+        return 0
+    district_data = district_data.copy()
+    district_data['Hour'] = pd.to_datetime(district_data['Violation Time'], 
+                                          format='%H%M', errors='coerce').dt.hour
+    peak = district_data[(district_data['Hour'] >= 8) & (district_data['Hour'] <= 10)]
+    return len(peak)
+
+layer3 = [delayed(count_peak_hours)(d) for d in layer1]
+
+# процент нарушений в час-пик
+def calculate_peak_percentage(total, peak):
+    if total == 0:
+        return 0
+    return round((peak / total) * 100, 2)
+
+layer4 = [delayed(calculate_peak_percentage)(t, p) for t, p in zip(layer2, layer3)]
+
+results = delayed(list)(layer4)
+
+results.visualize(filename='complex_district_analysis.png')
+display(Image('complex_district_analysis.png'))
+```
+Итоговый граф:
+
+![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/2%D1%81%D0%BB%D0%BE%D0%B6%D0%BD.png)
 

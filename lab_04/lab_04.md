@@ -51,8 +51,14 @@ df = dd.read_csv('Parking_Violations_Issued_-_Fiscal_Year_2014__August_2013___Ju
 df
 ```
 Результат:
-https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/1.jpg
+
 ![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/1.jpg)
+
+![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/2.jpg)
+
+![Image alt]([https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/3.jpg)
+
+![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/4.jpg)
 
 ### Шаг 2. Transform (Трансформация и очистка данных)
 Проводится профилирование качества данных: вычисление процента пропущенных значений, метод `.compute()` * Затем удаляю разреженные столбцы, не прибегая к вычислениям в памяти.
@@ -82,6 +88,15 @@ df_dropped = df.drop(columns=columns_to_drop)
 # Проверка результата (вычислит только первые 5 строк первого блока)
 df_dropped.head()
 ```
+Рузультат:
+
+![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/5.jpg)
+
+![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/6.jpg)
+
+![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/7.jpg)
+
+![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/5.jpg)
 
 ### Шаг 3. Load (Загрузка / Сохранение результатов)
 Чтобы завершить ETL-цикл, сохраняю очищенный Dask DataFrame обратно на диск в формате `parquet`
@@ -92,6 +107,14 @@ df_dropped.to_parquet('cleaned_parking_violations.parquet',
 
 print("Датасет успешно сохранен!")
 ```
+Результат:
+
+![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/8.jpg)
+
+Видим, что данные выгружаются:
+
+![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/9.jpg)
+
 
 ---
 

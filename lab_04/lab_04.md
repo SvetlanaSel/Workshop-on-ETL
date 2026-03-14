@@ -56,8 +56,6 @@ df
 
 ![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/2.jpg)
 
-![Image alt]([https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/3.jpg)
-
 ![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/4.jpg)
 
 ### Шаг 2. Transform (Трансформация и очистка данных)

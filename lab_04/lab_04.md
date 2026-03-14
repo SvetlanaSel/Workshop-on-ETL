@@ -13,7 +13,7 @@
 
 ### Шаг 1. Extract (Извлечение данных)
 
-Код:
+
 ```python
 # Установка Dask с полным набором зависимостей и графов
 !pip install "dask[complete]" graphviz

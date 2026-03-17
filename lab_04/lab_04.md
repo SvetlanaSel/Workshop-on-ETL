@@ -7,7 +7,7 @@
 *   Среда выполнения: Google Colab или Jupyter Notebook (локально).
 *   Библиотеки: `dask`, `pandas`, `graphviz`.
 
-[Файл lab_04_variant_13.ipynb](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/lab_04_variant_13.ipynb)
+[Файл lab_04_variant_13.ipynb](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/lab_04_variant_13%20(6).ipynb)
 
 ---
 

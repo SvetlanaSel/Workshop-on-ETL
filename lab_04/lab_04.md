@@ -223,3 +223,8 @@ display(Image('complex_district_analysis.png'))
 
 ![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/2%D1%81%D0%BB%D0%BE%D0%B6%D0%BD.png)
 
+### Шаг 5. Аналитика:
+
+- [Дашборд](https://datalens.yandex/vxmqojprzv8yf)
+
+![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/121212.png)

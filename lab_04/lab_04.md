@@ -89,6 +89,23 @@ df_dropped = df.drop(columns=columns_to_drop)
 
 # Проверка результата (вычислит только первые 5 строк первого блока)
 df_dropped.head()
+
+# 2. Удаление лишних для анализа столбцов
+
+additional_columns = [
+    'Street Code1',           # технические коды улиц
+    'Street Code2',
+    'Street Code3',
+    'Issuer Code',            # дублируется с Issuer Command/Squad
+    'Feet From Curb',
+    'Violation Post Code',    # почтовый индекс (20% пропусков)
+]
+
+# Удаляем столбцы из Dask DataFrame
+df_final = df_dropped.drop(columns=additional_columns)
+
+# Проверяем результат
+df_final.head()
 ```
 Рузультат:
 
@@ -98,24 +115,25 @@ df_dropped.head()
 
 ![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/7.jpg)
 
+![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/7_2.png)
 
 
 ### Шаг 3. Load (Загрузка / Сохранение результатов)
 Чтобы завершить ETL-цикл, сохраняю очищенный Dask DataFrame обратно на диск в формате `parquet`
 
 ```python
-df_dropped.to_parquet('cleaned_parking_violations.parquet', 
-                      engine='pyarrow')
+df_final.to_csv('new_cleaned_parking_violations.csv',
+                  single_file=True,
+                  index=False)
 
-print("Датасет успешно сохранен!")
 ```
 Результат:
 
-![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/8.jpg)
+![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/8_load.png)
 
 Видим, что данные выгружаются:
 
-![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/9.jpg)
+![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/loadings.png)
 
 
 ---

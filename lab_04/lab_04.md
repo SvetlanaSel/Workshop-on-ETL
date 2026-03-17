@@ -130,10 +130,10 @@ from dask import delayed
 from IPython.display import Image
 
 def get_total_violations():
-    return len(df_dropped)
+    return len(df_final)
 
 def get_unique_makes():
-    return df_dropped['Vehicle Make'].nunique().compute()
+    return df_final['Vehicle Make'].nunique().compute()
 
 def avg_violations_per_make(total, unique):
     return round(total / unique, 2)
@@ -164,7 +164,7 @@ districts = ['NY', 'K', 'Q', 'BX', 'R']  # Манхэттен, Бруклин, �
 
 # данные по каждому району
 def load_district_data(district):
-    return df_dropped[df_dropped['Violation County'] == district]
+    return df_final[df_final['Violation County'] == district]
 
 layer1 = [delayed(load_district_data)(d) for d in districts]
 
@@ -176,12 +176,12 @@ def count_violations(district_data):
 
 layer2 = [delayed(count_violations)(d) for d in layer1]
 
-# нарушения в час-пик 
+# нарушения в час-пик
 def count_peak_hours(district_data):
     if district_data is None or len(district_data) == 0:
         return 0
     district_data = district_data.copy()
-    district_data['Hour'] = pd.to_datetime(district_data['Violation Time'], 
+    district_data['Hour'] = pd.to_datetime(district_data['Violation Time'],
                                           format='%H%M', errors='coerce').dt.hour
     peak = district_data[(district_data['Hour'] >= 8) & (district_data['Hour'] <= 10)]
     return len(peak)

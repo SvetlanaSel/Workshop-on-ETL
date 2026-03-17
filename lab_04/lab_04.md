@@ -113,7 +113,7 @@ df_final.head()
 
 ![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/6.jpg)
 
-![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/7.jpg)
+![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/55_prs.png)
 
 ![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/7_2.png)
 
@@ -122,7 +122,7 @@ df_final.head()
 Чтобы завершить ETL-цикл, сохраняю очищенный Dask DataFrame обратно на диск в формате `parquet`
 
 ```python
-df_final.to_csv('new_cleaned_parking_violations.csv',
+df_final.to_csv('55_new_cleaned_parking_violations.csv',
                   single_file=True,
                   index=False)
 

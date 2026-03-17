@@ -79,8 +79,8 @@ with ProgressBar():
 
 print(missing_count_percent)
 
-# Формирование списка столбцов, где пропусков > 60%
-columns_to_drop = list(missing_count_percent[missing_count_percent > 60].index)
+# Формирование списка столбцов, где пропусков > 55%
+columns_to_drop = list(missing_count_percent[missing_count_percent > 55].index)
 print("Удаляемые столбцы:", columns_to_drop)
 
 # ОПТИМИЗАЦИЯ: Ленивое удаление столбцов без вызова .compute()!

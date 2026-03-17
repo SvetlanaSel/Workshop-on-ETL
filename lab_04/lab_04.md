@@ -96,9 +96,7 @@ df_dropped.head()
 
 ![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/6.jpg)
 
-![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/7.jpg)
 
-![Image alt](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/img/5.jpg)
 
 ### Шаг 3. Load (Загрузка / Сохранение результатов)
 Чтобы завершить ETL-цикл, сохраняю очищенный Dask DataFrame обратно на диск в формате `parquet`

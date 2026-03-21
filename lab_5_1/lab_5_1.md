@@ -9,6 +9,44 @@
 
 ---
 
+## Архитектура проекта
+
+```mermaid
+graph TD
+    subgraph External Sources
+        API[Open-Meteo API]
+    end
+
+    subgraph Docker Infrastructure
+        PG[(PostgreSQL<br/>Метаданные Airflow)]
+        
+        subgraph Airflow Components
+            SCH[Scheduler]
+            WEB[Webserver :8080]
+            INIT[Init-container]
+        end
+        
+        subgraph Visualization
+            STR[Streamlit App :8501]
+        end
+        
+        VOL[Shared Volume<br/>/opt/airflow/data]
+    end
+
+    subgraph User
+        BROWSER((Browser))
+    end
+
+    API -->|Получение прогноза| SCH
+    SCH -->|Сохранение CSV| VOL
+    SCH <-->|Чтение/Запись состояния| PG
+    WEB <-->|Чтение состояния| PG
+    STR -->|Чтение CSV| VOL
+    
+    BROWSER -->|Мониторинг DAG| WEB
+    BROWSER -->|Просмотр дашборда| STR
+```
+
 ## Технический стек
 * **Оркестрация:** Apache Airflow 2.8.1
 * **Контейнеризация:** Docker, Docker Compose

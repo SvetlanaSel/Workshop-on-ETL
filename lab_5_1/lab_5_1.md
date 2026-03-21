@@ -66,5 +66,21 @@ graph TD
 7. **`train_ml_model`**: Обучает модель линейной регрессии для предсказания продаж на основе двух признаков: температуры и дельты температуры, сохраняет модель в `ml_model.pkl`.
 8. **`deploy_ml_model`**: Имитирует деплой (загружает сохраненную `.pkl` модель) и демонстрирует предсказания на основе таблицы изменений.
 
-## Структура выходных данных
-После выполнения DAG в директории `/opt/airflow/data` формируются файлы
+## Структура
+```
+project/
+├── dags/
+│   └── real_umbrella.py
+├── app/
+│   └── app.py
+├── data/
+│   ├── weather_forecast.csv
+│   ├── clean_weather.csv
+│   ├── sales_data.csv
+│   ├── clean_sales.csv
+│   ├── joined_data.csv
+│   ├── changes_table.csv
+│   └── ml_model.pkl
+├── docker-compose.yml
+└── Dockerfile
+```

@@ -380,11 +380,10 @@ services:
     ports:
       - "8888:8888"
     volumes:
-      # Монтируем корень проекта, чтобы ноутбук ml.ipynb был виден
+      
       - ./:/opt/airflow/project
       - ./data:/opt/airflow/project/data
     working_dir: /opt/airflow/project
-    # Запускаем Jupyter без пароля для удобства локального тестрования
     command: bash -c "jupyter notebook --ip 0.0.0.0 --port 8888 --no-browser --allow-root --NotebookApp.token='' --NotebookApp.password=''"
 
 volumes:

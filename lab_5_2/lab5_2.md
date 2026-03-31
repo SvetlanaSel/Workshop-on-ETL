@@ -529,6 +529,8 @@ Streamlit запускается автоматически в Docker-конте
 
 <img width="1149" height="593" alt="image" src="https://github.com/user-attachments/assets/011d963f-c747-4bb4-9a9f-8313f3838f3d" />
 
+<img width="750" height="158" alt="image" src="https://github.com/user-attachments/assets/360a1a7c-50ae-4857-b817-00e014e251e7" />
+
 <img width="1150" height="676" alt="image" src="https://github.com/user-attachments/assets/d3bbef6b-8ec0-4f91-b631-feb28e10dc91" />
 
 

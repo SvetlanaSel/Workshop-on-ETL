@@ -512,9 +512,9 @@ sudo docker compose up -d
 
 ### 4. Выполнение ML-анализа (Jupyter in Docker)
 
-<img width="1016" height="356" alt="image" src="https://github.com/user-attachments/assets/bdb9a8af-1416-481d-9b58-1b4544075f0d" />
+<img width="1032" height="696" alt="image" src="https://github.com/user-attachments/assets/9a676b80-0e2c-4e05-86f6-a1a5f13e1c24" />
 
-<img width="1001" height="714" alt="image" src="https://github.com/user-attachments/assets/8df52521-10c4-4b63-842f-ae2138ced878" />
+<img width="771" height="431" alt="image" src="https://github.com/user-attachments/assets/b06dae40-e48a-4967-a7a4-c6a420d58001" />
 
 
 ### 5. Просмотр аналитики (Streamlit)
@@ -523,16 +523,15 @@ Streamlit запускается автоматически в Docker-конте
 
 Здесь представлен отчет со статистикой запусков и галереей изображений:
 
-<img width="1161" height="452" alt="image" src="https://github.com/user-attachments/assets/97480fcf-4421-4a75-8a30-336e6b5e0693" />
+<img width="1217" height="542" alt="image" src="https://github.com/user-attachments/assets/884d59f6-f67f-4adb-9c2b-4b4a6e8c887d" />
 
-<img width="1192" height="425" alt="image" src="https://github.com/user-attachments/assets/109d8757-18ed-4454-8d1a-27e9b6628a81" />
+<img width="1147" height="450" alt="image" src="https://github.com/user-attachments/assets/1082e700-57d3-4e92-a085-d68bf763f9b3" />
 
-<img width="1149" height="593" alt="image" src="https://github.com/user-attachments/assets/011d963f-c747-4bb4-9a9f-8313f3838f3d" />
+<img width="1184" height="583" alt="image" src="https://github.com/user-attachments/assets/234a5033-eeca-4fb3-9661-6c21f90bbad6" />
 
-<img width="750" height="158" alt="image" src="https://github.com/user-attachments/assets/360a1a7c-50ae-4857-b817-00e014e251e7" />
+<img width="1149" height="569" alt="image" src="https://github.com/user-attachments/assets/3e5f2381-7e4c-4fab-b248-a1459520d9d6" />
 
-<img width="1150" height="676" alt="image" src="https://github.com/user-attachments/assets/d3bbef6b-8ec0-4f91-b631-feb28e10dc91" />
-
+<img width="1160" height="386" alt="image" src="https://github.com/user-attachments/assets/c8dc2bf3-d6c8-4443-a2f5-28bd04c1e20e" />
 
 
 ---

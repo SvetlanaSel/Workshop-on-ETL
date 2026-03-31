@@ -72,17 +72,88 @@ flowchart LR
 ---
 ## Проект
 
+ml.ipynb
+```
+import os
+import pandas as pd
+from PIL import Image
+from transformers import CLIPProcessor, CLIPModel
+import json
+import transformers
+
+transformers.logging.set_verbosity_error()
+
+DATA_DIR = "./data"
+JSON_FILE = f"{DATA_DIR}/launches.json"
+
+model_id = "openai/clip-vit-base-patch32"
+processor = CLIPProcessor.from_pretrained(model_id)
+model = CLIPModel.from_pretrained(model_id)
+
+labels = [
+    "Falcon 9 rocket",
+    "Soyuz rocket",
+    "Starship spacecraft",
+    "Ariane rocket",
+    "Electron rocket"
+]
+
+with open(JSON_FILE) as f:
+    launches = json.load(f)["results"]
+
+results = []
+
+for launch in launches:
+    try:
+        # ❌ СПЕЦИАЛЬНО НЕПРАВИЛЬНЫЙ ПУТЬ
+        wrong_path = f"{DATA_DIR}/wrong_folder/{launch['image']}"
+        print(f"🔴 Пробуем неправильный путь: {wrong_path}")
+
+        Image.open(wrong_path)
+
+    except Exception as e:
+        print(f"❌ ERROR_TYPE: FileNotFoundError")
+        print("⚠️ Путь неверный. Используем корректный путь")
+
+    try:
+        # ✅ правильный путь
+        img_path = f"{DATA_DIR}/images/{launch['image']}"
+        image = Image.open(img_path).convert("RGB")
+
+        inputs = processor(text=labels, images=image, return_tensors="pt", padding=True)
+        outputs = model(**inputs)
+
+        probs = outputs.logits_per_image.softmax(dim=1).detach().numpy()[0]
+        idx = probs.argmax()
+
+        results.append({
+            "mission": launch["name"],
+            "provider": launch["provider"],
+            "status": launch["status"],
+            "predicted_rocket": labels[idx],
+            "confidence": round(probs[idx] * 100, 2),
+            "image": launch["image"]
+        })
+
+    except Exception as e:
+        print(f"Ошибка ML: {e}")
+
+df = pd.DataFrame(results)
+df.to_csv("./data/ml_predictions.csv", index=False)
+
+print("✅ ML отчет создан")
+```
+
 download_rocket_launches.py
 ```
 import json
-import pathlib
-import random
 import os
+import random
 from datetime import datetime
 from airflow import DAG
-from airflow.operators.bash import BashOperator
 from airflow.operators.python import PythonOperator
 from airflow.utils.dates import days_ago
+import requests
 
 DATA_DIR = "/opt/airflow/data"
 IMAGES_DIR = f"{DATA_DIR}/images"
@@ -90,171 +161,204 @@ JSON_FILE = f"{DATA_DIR}/launches.json"
 
 dag = DAG(
     dag_id="download_rocket_launch",
-    description="Вариант 13: Загрузка ракет (используем существующие изображения)",
     start_date=days_ago(1),
-    schedule_interval=None,          # Запускаем вручную
+    schedule_interval=None,
     catchup=False,
-    default_args={'owner': 'student', 'retries': 1},
 )
 
-# Убираем агрессивную очистку — только создаём папки
-prepare_directories = BashOperator(
-    task_id="prepare_directories",
-    bash_command=f"mkdir -p {IMAGES_DIR}",
-    dag=dag,
+# =========================
+# MOCK API + ОШИБКА + ФИКС
+# =========================
+def mock_api_with_error():
+    try:
+        # ❌ СПЕЦИАЛЬНО НЕПРАВИЛЬНЫЙ API
+        print("🔴 Попытка подключения к неправильному API...")
+        requests.get("http://256.256.256.256")  # невалидный IP
+
+    except Exception as e:
+        print(f"❌ ERROR_TYPE: ConnectionError")
+        print("⚠️ Ошибка подключения к API. Используем fallback (mock данные)")
+
+    # ✅ fallback (рабочий вариант)
+    try:
+        launches = []
+
+        providers = ["SpaceX", "Roscosmos", "ESA"]
+        statuses = ["Go", "Hold", "Success"]
+
+        images = os.listdir(IMAGES_DIR)
+
+        for i, img in enumerate(images):
+            launches.append({
+                "name": f"Mission {i}",
+                "provider": random.choice(providers),
+                "status": random.choice(statuses),
+                "image": img,
+                "date": datetime.utcnow().isoformat()
+            })
+
+        with open(JSON_FILE, "w") as f:
+            json.dump({"results": launches}, f)
+
+        print("✅ Данные успешно созданы через fallback")
+
+    except Exception as e:
+        print(f"❌ ERROR_TYPE: {type(e).__name__}")
+
+
+task = PythonOperator(
+    task_id="mock_api",
+    python_callable=mock_api_with_error,
+    dag=dag
 )
-
-def create_launches_json():
-    """Создаём launches.json на основе существующих изображений"""
-    image_files = [f for f in os.listdir(IMAGES_DIR) if f.lower().endswith(('.jpg', '.jpeg', '.png'))]
-    
-    if not image_files:
-        print("⚠️ В папке images нет изображений. Создаём минимальный mock.")
-        image_files = ["placeholder.jpg"]
-
-    launches = []
-    rocket_providers = ["SpaceX", "Roscosmos", "ESA", "CNSA", "Rocket Lab", "ULA", "Blue Origin"]
-
-    for i, img_name in enumerate(image_files[:12], 1):   # максимум 12 изображений
-        provider = random.choice(rocket_providers)
-        launches.append({
-            "id": i,
-            "name": f"Rocket Mission #{100 + i}",
-            "launch_service_provider": {"name": provider},
-            "window_start": datetime.utcnow().isoformat() + "Z",
-            "status": {"name": random.choice(["Go", "Hold", "Success"])},
-            "image_url": f"/images/{img_name}"
-        })
-
-    with open(JSON_FILE, "w", encoding="utf-8") as f:
-        json.dump({"results": launches}, f, ensure_ascii=False, indent=2)
-
-    print(f"✅ Создан launches.json на основе {len(image_files)} изображений")
-
-create_json_task = PythonOperator(
-    task_id="create_launches_json",
-    python_callable=create_launches_json,
-    dag=dag,
-)
-
-notify = BashOperator(
-    task_id="notify",
-    bash_command=f'echo "DAG завершён. Изображений найдено: $(ls {IMAGES_DIR} | wc -l)"',
-    dag=dag,
-)
-
-# Порядок
-prepare_directories >> create_json_task >> notify
 ```
 app.py
 ```
 import streamlit as st
 import pandas as pd
-import json
 import os
 from PIL import Image, UnidentifiedImageError
 
-st.set_page_config(page_title="Rocket Analytics - Вариант 13", layout="wide")
+st.set_page_config(page_title="Rocket ML Analytics", layout="wide")
 
 DATA_DIR = "/opt/airflow/data"
-JSON_FILE = f"{DATA_DIR}/launches.json"
+ML_FILE = f"{DATA_DIR}/ml_predictions.csv"
+IMAGES_DIR = f"{DATA_DIR}/images"
 
-st.title("🚀 Вариант 13: Список ракет и их изображений")
+st.title("🚀 ML Аналитика ракет (Вариант 13)")
 
 # =========================
-# КНОПКА ОБНОВЛЕНИЯ
+# ОБНОВЛЕНИЕ
 # =========================
 if st.button("🔄 Обновить данные"):
     st.rerun()
 
 # =========================
-# ЗАГРУЗКА ДАННЫХ
+# ЗАГРУЗКА ML ДАННЫХ
 # =========================
 @st.cache_data(ttl=2)
-def load_data():
-    if os.path.exists(JSON_FILE):
-        with open(JSON_FILE, "r", encoding="utf-8") as f:
-            return json.load(f)
-    return {"results": []}
+def load_ml():
+    if os.path.exists(ML_FILE):
+        return pd.read_csv(ML_FILE)
+    return pd.DataFrame()
 
-data = load_data()
-launches = data.get("results", [])
+df = load_ml()
 
 # =========================
-# 1. ТАБЛИЦА
+# 1. ТАБЛИЦА (ГЛАВНЫЙ ОТЧЕТ)
 # =========================
-st.header("1. Список ракет и запусков")
+st.header("1. ML Отчет по запускам")
 
-if launches:
-    df = pd.DataFrame([{
-        "Миссия": l.get("name"),
-        "Провайдер": l.get("launch_service_provider", {}).get("name"),
-        "Дата/Время": l.get("window_start"),
-        "Статус": l.get("status", {}).get("name")
-    } for l in launches])
-
+if not df.empty:
     st.dataframe(df, use_container_width=True)
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-        st.subheader("По провайдерам")
-        st.bar_chart(df["Провайдер"].value_counts())
-
-    with col2:
-        st.subheader("По статусам")
-        st.bar_chart(df["Статус"].value_counts())
-
 else:
-    st.warning("Нет данных. Запусти DAG.")
+    st.warning("Нет ML данных. Запусти ml.ipynb")
+    st.stop()
 
 st.markdown("---")
 
 # =========================
-# 2. ГАЛЕРЕЯ
+# 2. ОСНОВНАЯ АНАЛИТИКА
 # =========================
-st.header("2. Галерея изображений")
+st.header("2. Основная аналитика")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.subheader("По провайдерам")
+    st.bar_chart(df["provider"].value_counts())
+
+with col2:
+    st.subheader("По статусам")
+    st.bar_chart(df["status"].value_counts())
+
+with col3:
+    st.subheader("Типы ракет (ML)")
+    st.bar_chart(df["predicted_rocket"].value_counts())
+
+st.markdown("---")
+
+# =========================
+# 3. УГЛУБЛЕННАЯ АНАЛИТИКА
+# =========================
+st.header("3. ML аналитика")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    st.subheader("Средняя уверенность по провайдерам")
+    df_conf = df.groupby("provider")["confidence"].mean()
+    st.bar_chart(df_conf)
+
+with col2:
+    st.subheader("Распределение confidence")
+    st.line_chart(df["confidence"])
+
+# KPI
+st.markdown("### 📊 Метрики")
+
+success_rate = (df["status"] == "Success").mean() * 100
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    st.metric("Всего запусков", len(df))
+
+with col2:
+    st.metric("Успешность (%)", f"{success_rate:.2f}")
+
+with col3:
+    st.metric("Средняя уверенность ML", f"{df['confidence'].mean():.2f}%")
+
+st.markdown("---")
+
+# =========================
+# 4. ГАЛЕРЕЯ + ML
+# =========================
+st.header("4. Галерея с ML предсказаниями")
 
 loaded = 0
 errors = 0
 
-if launches:
-    cols = st.columns(3)
+cols = st.columns(3)
 
-    for idx, launch in enumerate(launches):
-        img_path = f"{DATA_DIR}{launch['image_url']}"
+for idx, row in df.iterrows():
+    img_path = f"{IMAGES_DIR}/{row['image']}"
 
-        with cols[idx % 3]:
-            try:
-                img = Image.open(img_path)
-                st.image(img, caption=launch["name"], width="stretch")
-                loaded += 1
+    with cols[idx % 3]:
+        try:
+            img = Image.open(img_path)
 
-            except UnidentifiedImageError:
-                st.warning(f"⚠️ Неподдерживаемый формат: {launch['image_url']}")
-                errors += 1
+            st.image(
+                img,
+                caption=f"{row['predicted_rocket']} ({row['confidence']}%)",
+                width="stretch"
+            )
 
-            except FileNotFoundError:
-                st.error(f"❌ Файл не найден: {launch['image_url']}")
-                errors += 1
+            loaded += 1
 
-            except Exception as e:
-                st.error(f"Ошибка: {str(e)}")
-                errors += 1
+        except UnidentifiedImageError:
+            st.warning(f"Формат не поддерживается: {row['image']}")
+            errors += 1
 
-    st.success(f"✅ Загружено изображений: {loaded}")
-    if errors:
-        st.error(f"❌ Ошибок загрузки: {errors}")
+        except FileNotFoundError:
+            st.error(f"Файл не найден: {row['image']}")
+            errors += 1
 
-else:
-    st.info("Нет данных для отображения")
+        except Exception as e:
+            st.error(str(e))
+            errors += 1
+
+st.success(f"Загружено: {loaded}")
+if errors:
+    st.error(f"Ошибок: {errors}")
 
 st.markdown("---")
 
 # =========================
-# 3. АНАЛИЗ ОШИБОК
+# 5. АНАЛИЗ ОШИБОК AIRFLOW
 # =========================
-st.header("3. Анализ ошибок (из логов Airflow)")
+st.header("5. Анализ ошибок (Airflow logs)")
 
 LOGS_DIR = "/opt/airflow/logs"
 error_counts = {}
@@ -279,61 +383,9 @@ if error_counts:
     st.dataframe(df_errors, use_container_width=True)
     st.bar_chart(df_errors.set_index("Тип ошибки"))
 else:
-    st.success("Ошибок не найдено 🎉")
-# =========================
-# 4. ML АНАЛИТИКА (CLIP)
-# =========================
-st.header("5. ML Аналитика (распознавание ракет)")
+    st.success("Ошибок не найдено")
 
-ML_FILE = f"{DATA_DIR}/ml_predictions.csv"
-
-if os.path.exists(ML_FILE):
-    df_ml = pd.read_csv(ML_FILE)
-
-    if not df_ml.empty:
-
-        st.subheader("Результаты распознавания")
-        st.dataframe(df_ml, use_container_width=True)
-
-        # 📊 1. Распределение типов ракет
-        st.subheader("Типы ракет (по ML)")
-        rocket_counts = df_ml["predicted_rocket"].value_counts()
-        st.bar_chart(rocket_counts)
-
-        # 🏆 2. Самый частый тип
-        top_rocket = rocket_counts.idxmax()
-        st.success(f"🚀 Самый частый тип: {top_rocket}")
-
-        # 🔗 3. Связка с изображениями
-        st.subheader("Примеры распознавания")
-
-        cols = st.columns(3)
-
-        for idx, row in df_ml.iterrows():
-            img_path = f"{DATA_DIR}/images/{row['image_name']}"
-
-            with cols[idx % 3]:
-                try:
-                    img = Image.open(img_path)
-
-                    st.image(
-                        img,
-                        caption=f"{row['predicted_rocket']} ({row['confidence']}%)",
-                        width="stretch"
-                    )
-
-                except Exception:
-                    st.warning(f"Нет изображения: {row['image_name']}")
-
-    else:
-        st.warning("ML файл пуст")
-else:
-    st.info("Сначала запусти ml.ipynb для генерации ml_predictions.csv")
-
-st.markdown("---")
-
-
-st.caption("Вариант 13 | Streamlit + Airflow + Docker")
+st.caption("ML-first архитектура | Airflow + CLIP + Streamlit")
 ```
 docker-compose.yml
 ```

@@ -585,7 +585,30 @@ Streamlit запускается автоматически в Docker-конте
 
 <img width="1160" height="386" alt="image" src="https://github.com/user-attachments/assets/c8dc2bf3-d6c8-4443-a2f5-28bd04c1e20e" />
 
+Лог запуска dag с преднамеренной ошибкой:
 
+<img width="1166" height="507" alt="image" src="https://github.com/user-attachments/assets/4e6c6fef-2c9c-4527-83a9-c03c68be70a1" />
+
+Полный текст лога:
+```
+[2026-03-31T10:06:12.006+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=non-requeueable deps ti=<TaskInstance: download_rocket_launch.mock_api manual__2026-03-31T10:06:08.711522+00:00 [queued]>
+[2026-03-31T10:06:12.027+0000] {taskinstance.py:1956} INFO - Dependencies all met for dep_context=requeueable deps ti=<TaskInstance: download_rocket_launch.mock_api manual__2026-03-31T10:06:08.711522+00:00 [queued]>
+[2026-03-31T10:06:12.027+0000] {taskinstance.py:2170} INFO - Starting attempt 1 of 1
+[2026-03-31T10:06:12.066+0000] {taskinstance.py:2191} INFO - Executing <Task(PythonOperator): mock_api> on 2026-03-31 10:06:08.711522+00:00
+[2026-03-31T10:06:12.077+0000] {standard_task_runner.py:60} INFO - Started process 172 to run task
+[2026-03-31T10:06:12.082+0000] {standard_task_runner.py:87} INFO - Running: ['***', 'tasks', 'run', 'download_rocket_launch', 'mock_api', 'manual__2026-03-31T10:06:08.711522+00:00', '--job-id', '82', '--raw', '--subdir', 'DAGS_FOLDER/download_rocket_launches.py', '--cfg-path', '/tmp/tmpe6h0yaeg']
+[2026-03-31T10:06:12.104+0000] {standard_task_runner.py:88} INFO - Job 82: Subtask mock_api
+[2026-03-31T10:06:12.585+0000] {task_command.py:423} INFO - Running <TaskInstance: download_rocket_launch.mock_api manual__2026-03-31T10:06:08.711522+00:00 [running]> on host 70e9ab992828
+[2026-03-31T10:06:13.350+0000] {taskinstance.py:2480} INFO - Exporting env vars: AIRFLOW_CTX_DAG_OWNER='***' AIRFLOW_CTX_DAG_ID='download_rocket_launch' AIRFLOW_CTX_TASK_ID='mock_api' AIRFLOW_CTX_EXECUTION_DATE='2026-03-31T10:06:08.711522+00:00' AIRFLOW_CTX_TRY_NUMBER='1' AIRFLOW_CTX_DAG_RUN_ID='manual__2026-03-31T10:06:08.711522+00:00'
+[2026-03-31T10:06:13.352+0000] {logging_mixin.py:188} INFO - 🔴 Попытка подключения к неправильному API...
+[2026-03-31T10:06:13.401+0000] {logging_mixin.py:188} INFO - ❌ ERROR_TYPE: ConnectionError
+[2026-03-31T10:06:13.402+0000] {logging_mixin.py:188} INFO - ⚠️ Ошибка подключения к API. Используем fallback (mock данные)
+[2026-03-31T10:06:13.405+0000] {logging_mixin.py:188} INFO - ✅ Данные успешно созданы через fallback
+[2026-03-31T10:06:13.408+0000] {python.py:201} INFO - Done. Returned value was: None
+[2026-03-31T10:06:13.456+0000] {taskinstance.py:1138} INFO - Marking task as SUCCESS. dag_id=download_rocket_launch, task_id=mock_api, execution_date=20260331T100608, start_date=20260331T100612, end_date=20260331T100613
+[2026-03-31T10:06:13.736+0000] {local_task_job_runner.py:234} INFO - Task exited with return code 0
+[2026-03-31T10:06:13.791+0000] {taskinstance.py:3280} INFO - 0 downstream tasks scheduled from follow-on schedule check
+```
 ---
 
 ## Вывод

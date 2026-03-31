@@ -60,8 +60,10 @@ flowchart LR
 ├── dags/                 # Airflow DAGs (download_rocket_launches.py)
 ├── data/                 # Локальная папка для JSON, фото
 ├── logs/                 # Логи Airflow (доступны напрямую из хоста)
-├── docker-compose.yml    
-└── Dockerfile            
+├── docker-compose.yml
+├── ml.ipynb              # ML Ноутбук для распознавания ракет
+└── Dockerfile
+
 ```
 ---
 ## Проект
@@ -455,7 +457,14 @@ sudo docker compose up -d
 
 <img width="1223" height="331" alt="image" src="https://github.com/user-attachments/assets/b5ed4807-c049-4b92-823c-aec1193cebd0" />
 
-### 4. Просмотр аналитики (Streamlit)
+### 4. Выполнение ML-анализа (Jupyter in Docker)
+
+<img width="1016" height="356" alt="image" src="https://github.com/user-attachments/assets/bdb9a8af-1416-481d-9b58-1b4544075f0d" />
+
+<img width="1001" height="714" alt="image" src="https://github.com/user-attachments/assets/8df52521-10c4-4b63-842f-ae2138ced878" />
+
+
+### 5. Просмотр аналитики (Streamlit)
 Streamlit запускается автоматически в Docker-контейнере.
 в раузере по адресу: `http://localhost:8501`
 
@@ -466,6 +475,11 @@ Streamlit запускается автоматически в Docker-конте
 <img width="1192" height="425" alt="image" src="https://github.com/user-attachments/assets/109d8757-18ed-4454-8d1a-27e9b6628a81" />
 
 <img width="1149" height="593" alt="image" src="https://github.com/user-attachments/assets/011d963f-c747-4bb4-9a9f-8313f3838f3d" />
+
+<img width="1150" height="676" alt="image" src="https://github.com/user-attachments/assets/d3bbef6b-8ec0-4f91-b631-feb28e10dc91" />
+
+<img width="1189" height="594" alt="image" src="https://github.com/user-attachments/assets/d55dd9b6-6acf-487d-91ce-0dba3b9abff4" />
+
 
 ---
 

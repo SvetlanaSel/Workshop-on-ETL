@@ -23,29 +23,33 @@ flowchart LR
     API((Mock Data Generator))
 
     subgraph Docker Containers[Контейнеры Docker]
-        Airflow["⚙️ Airflow (DAG генерации данных)"]
-        Streamlit["📊 Streamlit (Дашборд)"]
+        Airflow["⚙️ Airflow (ETL + генерация запусков)"]
+        Jupyter["🧠 Jupyter (ML / CLIP анализ)"]
+        Streamlit["📊 Streamlit (Дашборд + аналитика)"]
     end
 
     subgraph Ubuntu Host[Хост Ubuntu]
-        Data[(📁 ./data)]
-        Images[(📁 ./data/images)]
-        Logs[(📁 ./logs)]
+        Data[(📁 ./data<br/>JSON + изображения + CSV)]
+        Logs[(📁 ./logs Логи Airflow)]
     end
 
     API == "1. Генерация mock-данных" ==> Airflow
-    Airflow == "2. Сохраняет launches.json" ==> Data
-    Airflow -. "Пишет логи" .-> Logs
 
-    Data == "3. Читает launches.json" ==> Streamlit
-    Images == "4. Читает изображения ракет" ==> Streamlit
+    Airflow == "2. Сохраняет launches.json и использует изображения" ==> Data
+    Airflow -. "Пишет логи и ошибки (HTTP / Exception)" .-> Logs
 
-    Streamlit == "5. Отображение таблиц, графиков и фото" ==> User((👤 Пользователь))
+    Data == "3. Берет изображения ракет" ==> Jupyter
+    Jupyter == "4. Генерирует ml_predictions.csv" ==> Data
+
+    Data == "5. Читает JSON, изображения и ML CSV" ==> Streamlit
+    Logs == "6. Анализ типов ошибок" ==> Streamlit
+
+    Streamlit == "7. Отображение таблиц, графиков, ML аналитики и изображений" ==> User((👤 Пользователь))
 
     style Data fill:#fff3e0,stroke:#f57c00
-    style Images fill:#fff3e0,stroke:#f57c00
     style Logs fill:#fff3e0,stroke:#f57c00
     style Airflow fill:#ffe0b2,stroke:#fb8c00
+    style Jupyter fill:#c8e6c9,stroke:#43a047
     style Streamlit fill:#b3e5fc,stroke:#03a9f4
 ```
 

@@ -6,3 +6,4 @@
 - [Лабораторная работа №3. Интеграция данных из разнородных источников. Проектирование архитектуры](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_03/lab_03.md)
 - [Лабораторная работа №4. Анализ и обработка больших данных с Dask (ETL-пайплайн)](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_04/lab_04.md)
 - [Лабораторная работа №5.1. Проектирование объектной модели данных](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_5_1/lab_5_1.md)
+- [Лабораторная работа работа 5.2 Разработка алгоритмов для трансформации данных. Airflow DAG](https://github.com/SvetlanaSel/Workshop-on-ETL/blob/main/lab_5_2/lab5_2.md)

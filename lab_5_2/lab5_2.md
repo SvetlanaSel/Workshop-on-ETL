@@ -276,6 +276,55 @@ if error_counts:
     st.bar_chart(df_errors.set_index("Тип ошибки"))
 else:
     st.success("Ошибок не найдено 🎉")
+# =========================
+# 4. ML АНАЛИТИКА (CLIP)
+# =========================
+st.header("5. ML Аналитика (распознавание ракет)")
+
+ML_FILE = f"{DATA_DIR}/ml_predictions.csv"
+
+if os.path.exists(ML_FILE):
+    df_ml = pd.read_csv(ML_FILE)
+
+    if not df_ml.empty:
+
+        st.subheader("Результаты распознавания")
+        st.dataframe(df_ml, use_container_width=True)
+
+        # 📊 1. Распределение типов ракет
+        st.subheader("Типы ракет (по ML)")
+        rocket_counts = df_ml["predicted_rocket"].value_counts()
+        st.bar_chart(rocket_counts)
+
+        # 🏆 2. Самый частый тип
+        top_rocket = rocket_counts.idxmax()
+        st.success(f"🚀 Самый частый тип: {top_rocket}")
+
+        # 🔗 3. Связка с изображениями
+        st.subheader("Примеры распознавания")
+
+        cols = st.columns(3)
+
+        for idx, row in df_ml.iterrows():
+            img_path = f"{DATA_DIR}/images/{row['image_name']}"
+
+            with cols[idx % 3]:
+                try:
+                    img = Image.open(img_path)
+
+                    st.image(
+                        img,
+                        caption=f"{row['predicted_rocket']} ({row['confidence']}%)",
+                        width="stretch"
+                    )
+
+                except Exception:
+                    st.warning(f"Нет изображения: {row['image_name']}")
+
+    else:
+        st.warning("ML файл пуст")
+else:
+    st.info("Сначала запусти ml.ipynb для генерации ml_predictions.csv")
 
 st.markdown("---")
 
